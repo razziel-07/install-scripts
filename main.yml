@@ -10,7 +10,7 @@
         - "{{ inventory_dir }}/vault/secrets.yml"
         - "{{ inventory_dir }}/custom_vars.yml"
 
-      when: item|exists
+      when: item is exists
       tags:
         - account
         - user
@@ -26,13 +26,13 @@
 
   roles:
     - locales
-    - docker
+    #- docker
     - account
-    - samba
-    - dnsmasq
-    - packer
-    - terraform
-    - vagrant
+    #- samba
+    #- dnsmasq
+    #- packer
+    #- terraform
+    #- vagrant
     - oh-my-zsh
-    - atom
-    - aws
+    #- atom
+    #- aws

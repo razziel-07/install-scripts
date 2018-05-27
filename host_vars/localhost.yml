@@ -1,6 +1,7 @@
 ---
-account_default_user_fullname: John Doe
-account_default_user_email: john.doe@example.com
+account_default_user: jc
+account_default_user_fullname: JC BERGOT
+account_default_user_email: 18658617+Brettdah@users.noreply.github.com
 
 locale_generate:
   -
@@ -115,121 +116,62 @@ apt_sources_lists_default:
                 packages: ['main', 'restricted', 'universe', 'multiverse']
                 section:  "{{ ansible_distribution_release }}-backports"
 
-apt_sources_lists_extra:
-    -
-        comment: Google chrome repository
-        file: /etc/apt/sources.list.d/google-chrome.list
-        distrib: ubuntu
-        repositories:
-            -
-                comment:
-                enabled: true
-                src_enabled: false
-                url: 'https://dl.google.com/linux/chrome/deb/'
-                section:  'stable'
-                packages: ['main']
-                archs: ['amd64']
-                # key_server:
-                key_url: https://dl-ssl.google.com/linux/linux_signing_key.pub
-                # key_id:
-    -
-        comment: Virtualbox repository
-        file: /etc/apt/sources.list.d/virtualbox.list
-        distrib: ubuntu
-        repositories:
-            -
-                comment:
-                enabled: true
-                src_enabled: false
-                url: 'http://download.virtualbox.org/virtualbox/debian'
-                packages: ['contrib']
-                archs: ['amd64']
-                # key_server:
-                key_url: https://www.virtualbox.org/download/oracle_vbox_2016.asc
-                # key_id:
+#apt_sources_lists_extra:
+#    -
+#        comment: Google chrome repository
+#        file: /etc/apt/sources.list.d/google-chrome.list
+#        distrib: ubuntu
+#        repositories:
+#            -
+#                comment:
+#                enabled: true
+#                src_enabled: false
+#                url: 'https://dl.google.com/linux/chrome/deb/'
+#                section:  'stable'
+#                packages: ['main']
+#                archs: ['amd64']
+#                # key_server:
+#                key_url: https://dl-ssl.google.com/linux/linux_signing_key.pub
+#                # key_id:
+#    -
+#        comment: Virtualbox repository
+#        file: /etc/apt/sources.list.d/virtualbox.list
+#        distrib: ubuntu
+#        repositories:
+#            -
+#                comment:
+#                enabled: true
+#                src_enabled: false
+#                url: 'http://download.virtualbox.org/virtualbox/debian'
+#                packages: ['contrib']
+#                archs: ['amd64']
+#                # key_server:
+#                key_url: https://www.virtualbox.org/download/oracle_vbox_2016.asc
+#                # key_id:
 apt_upgrade_type: dist
 apt_upgrade: true
 
 # list of extra packages to install
 apt_extra_packages:
-  # - ack-grep # not in Ubuntu 17.10
-  - p7zip-rar
-  - lftp
+  - ack-grep # not in Ubuntu 17.10
   - dos2unix
-  # - openssh-blacklist
-  # - openssh-blacklist-extra
-  # - openssl-blacklist
-  # - openssl-blacklist-extra
-  - clamav
-  - clamav-freshclam
-  - vim-doc
-  - trash-cli
-  - mc
+  - fonts-inconsolata
+  - git-doc
+  - git-extras
+  - git-flow
+  - jq
   - manpages-fr
   - manpages-fr-dev
   - manpages-fr-extra
-  - git-extras
-  - git-doc
-  - synaptic
-  - google-chrome-stable
-  - ctags
-  - vim-gnome
-  - zsh-doc
-  - terminator
-  - gparted
-  - fonts-inconsolata
-  - cups-pdf
+  - openssh-blacklist
+  - openssh-blacklist-extra
+  - openssl-blacklist
+  - openssl-blacklist-extra
   - samba
-  - bison
-  - unace
-  - filezilla
-  - subversion
-  - subversion-tools
-  - git-flow
-  - git-cola
-  - git-svn
-  - git-email
-  - git-gui
-  - mercurial
-  # - mercurial-git
-  - hgsvn
-  - cvs
-  - cvs2svn
-  - meld
-  - firefox
-  - firefox-locale-fr
-  - thunderbird
-  - thunderbird-locale-fr
-  - thunderbird-gnome-support
-  - chromium-browser
-  - chromium-browser-l10n
-  - chromium-codecs-ffmpeg
-  - ubuntu-restricted-extras
-  - keepassx
-  # - keepass2
-  # - keepass2-doc
-  - libreoffice
-  - graphviz
-  - gimp
-  - inkscape
-  # - nautilus-dropbox
-  - gnome-control-center
-  # - unity-chromium-extension
-  # - unity-tweak-tool
-  - gedit-plugins
-  - gedit-developer-plugins
-  - ooo-thumbnailer
-  - pidgin
-  - vlc
-  - openjdk-11-jre
-  - openjdk-11-jdk
-  # - icedtea-9-plugin
-  - gnucash
-  - gwakeonlan
-  - virtualbox-5.1
-  - dkms
   - sipcalc
-  - jq
+  - trash-cli
+  - unace
+  - vim-doc
 
 python_pip2_packages:
   - { name: 'jinja2-cli[yaml]'}
@@ -253,46 +195,46 @@ samba_shares: []
 # list of packages to remove
 apt_remove_packages: []
 
-dnsmasq_addresses:
-  -
-    domain: localhost
-    ip: 127.0.0.1
-  -
-    domain: dev
-    ip: 127.0.0.1
-  -
-    domain: dev.localhost
-    ip: 127.0.0.1
-  -
-    domain: dev.local
-    ip: 127.0.0.1
-  -
-    domain: local.com
-    ip: 127.0.0.1
-  -
-    domain: localhost.com
-    ip: 127.0.0.1
+#dnsmasq_addresses:
+#  -
+#    domain: localhost
+#    ip: 127.0.0.1
+#  -
+#    domain: dev
+#    ip: 127.0.0.1
+#  -
+#    domain: dev.localhost
+#    ip: 127.0.0.1
+#  -
+#    domain: dev.local
+#    ip: 127.0.0.1
+#  -
+#    domain: local.com
+#    ip: 127.0.0.1
+#  -
+#    domain: localhost.com
+#    ip: 127.0.0.1
 
-docker_compose_by_pip: false
-docker_allowed_user:
-  - "{{ account_default_user }}"
-
-docker_debian_dependencies:
-  - apt-transport-https
-  - ca-certificates
-  - curl
-  - software-properties-common
-  - acl
-  - cgroup-lite
-  - apparmor
-  - linux-image-extra-virtual
-
-atom_users:
-  -
-    user: "{{ account_default_user }}"
-    packages:
-      - sync-settings
-
+#docker_compose_by_pip: false
+#docker_allowed_user:
+#  - "{{ account_default_user }}"
+#
+#docker_debian_dependencies:
+#  - apt-transport-https
+#  - ca-certificates
+#  - curl
+#  - software-properties-common
+#  - acl
+#  - cgroup-lite
+#  - apparmor
+#  - linux-image-extra-virtual
+#
+#atom_users:
+#  -
+#    user: "{{ account_default_user }}"
+#    packages:
+#      - sync-settings
+#
 zsh_users:
   -
     user: "{{ account_default_user }}"
@@ -305,28 +247,17 @@ zsh_users:
     plugins:
       - git
       - gitfast
-      - mercurial
-      - docker
-      - docker-compose
-      - npm
       - python
       - debian
       - screen
-      - tmux
-      - urltools
       - git-extras
-      - bower
-      - composer
       - encode64
-      - terraform
-      - vagrant
-      - kubectl
 
-aws_cli_users:
-  - "{{ account_default_user }}"
+#aws_cli_users:
+#  - "{{ account_default_user }}"
 
-aws_cli_bash_autocompletion: true
-aws_cli_zsh_autocompletion: true
+#aws_cli_bash_autocompletion: true
+#aws_cli_zsh_autocompletion: true
 
 account_users:
   "{{ account_default_user }}":
@@ -341,7 +272,6 @@ account_users:
     # group: # primary group
     group: "{{ account_default_user }}"
     groups:
-      - docker
       - sudo
     # append_groups: # default yes
     shell: /usr/bin/zsh
