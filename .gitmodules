@@ -1,7 +1,7 @@
 
 [submodule "roles/account"]
 	path = roles/account
-	url = https://github.com/csanquer/ansible-role-account.git
+	url = https://github.com/Brettdah/ansible-role-account.git
 [submodule "roles/aws"]
 	path = roles/aws
 	url = https://github.com/csanquer/ansible-role-aws.git
@@ -43,7 +43,7 @@
 	url = https://github.com/csanquer/ansible-role-atom.git
 [submodule "roles/oh-my-zsh"]
 	path = roles/oh-my-zsh
-	url = https://github.com/csanquer/ansible-role-oh-my-zsh.git
+	url = https://github.com/Brettdah/ansible-role-oh-my-zsh.git
 [submodule "roles/vagrant"]
 	path = roles/vagrant
 	url = https://github.com/csanquer/ansible-role-vagrant.git
