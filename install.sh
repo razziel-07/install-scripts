@@ -52,11 +52,22 @@ install_dependencies()
           echo "pip not found :"
           echo "- installing Python and build dependencies ..."
           echo "$sudopwd\n" | sudo -S -p '' apt-get install -y -q build-essential libffi-dev libssl-dev python python-dev python-setuptools git
-          echo "$sudopwd\n" | sudo -S -p '' easy_install -q pip
+	  echo "Checking easy_install accessibility"
+	  if [ ! -x "$(command -v easy_install)" ]
+	  then
+	    echo "easy_install not found after installing pyton-setuptools installing pip from $distId repos"
+            echo "$sudopwd\n" | sudo -S -p '' apt-get install -y -q python-pip
+  	  else
+	    echo "easy install found"
+	    echo "$sudopwd\n" | sudo -S -p '' easy_install -q pip
+	  fi
+      else
+	  echo "pip found !"
       fi
+
       if [ ! -x "$(command -v ansible)" ]
       then
-	  echo "pip found :"
+	  echo "ansible not found :"
           echo "- installing Ansible ..."
           echo "$sudopwd\n" | sudo -S -p '' pip install -q -U ansible
       fi
@@ -67,12 +78,13 @@ execute_ansible()
 {
   sudopwd=$1
   user=`whoami`
-
+  
   echo "installing ansible galaxy roles"
   ansible-galaxy install -r roles.yml -p roles
-
-  playbook_options="-u $user $@"
-
+  #to add remote user 
+  #playbook_options="-u $user $@"
+  # else
+  #for a your secrets :
   if [ -f "vault/secrets.yml" ];then
       playbook_options="$playbook_options --ask-vault-pass"
   fi
