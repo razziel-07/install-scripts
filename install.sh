@@ -20,19 +20,28 @@ install_prerequisite()
 
   echo "checking lsb_release existance"
   # is lsb_release installed
+  if [ ! -x "$(command -v lsb_release)" ]; then
+    echo "lsb-release is not installed"
+    if [ -x "$(command -v apt-get)" ]; then
+        echo -e "Oh we are on debian Familly\nInstalling lsb-release"
+        echo "$sudopassword\n" | sudo -S -p '' apt-get install -y lsb-release
+        pkg_manager="apt-get"
+        init_pkg="lsb-release"
+    elif [ -x "$(command -v yum)" ]; then
+        echo "This is Red-Hat Family\nInstalling redhat-lsb"
+        echo "$sudopassword\n" | sudo -S -p '' yum install -y redhat-lsb
+        pkg_manager="yum"
+        init_pkg="redhat-lsb"
+    fi
+    echo "installing $init_pkg with $pkg_manager :"
+    echo "$sudopassword\n" | sudo -S -p '' $pkg_manager -y $init_pkg
+  else
+    echo "lsb_realease found ! :)"
+  fi
   if [ ! -x "$(command -v lsb_release)" ]
   then
-    echo "not found"
-    #what's my package manager
-    if [ -x "$(command -v apt-get)" ]
-    then
-        echo 'installing lsb release for Debian family (apt-get pkg manager)'
-        echo "$sudopwd\n" | sudo -S -p '' apt-get install -y lsb-release
-    # elif [ -x "$(command -v yum)" ]; then
-    #    echo "$sudopwd\n" | sudo -S -p '' yum install -y redhat-lsb
-    fi
-  else
-    echo "found ! :)"
+      echo "pb lsb_release not found"
+      exit 202
   fi
 }
 
@@ -43,35 +52,28 @@ install_dependencies()
   distRelease=`lsb_release -sr`
   distCodename=`lsb_release -sc`
 
-
   if [ "$distId" = 'Debian' -o "$distId" = 'Ubuntu' ]
   then
-      echo "checking pip installation"
-      if [ ! -x "$(command -v pip)" ]
-      then
-          echo "pip not found :"
-          echo "- installing Python and build dependencies ..."
-          echo "$sudopwd\n" | sudo -S -p '' apt-get install -y -q build-essential libffi-dev libssl-dev python python-dev python-setuptools git
-	  echo "Checking easy_install accessibility"
-	  if [ ! -x "$(command -v easy_install)" ]
-	  then
-	    echo "easy_install not found after installing pyton-setuptools installing pip from $distId repos"
-            echo "$sudopwd\n" | sudo -S -p '' apt-get install -y -q python-pip
-  	  else
-	    echo "easy install found"
-	    echo "$sudopwd\n" | sudo -S -p '' easy_install -q pip
-	  fi
-      else
-	  echo "pip found !"
-      fi
-
-      if [ ! -x "$(command -v ansible)" ]
-      then
-	  echo "ansible not found :"
-          echo "- installing Ansible ..."
-          echo "$sudopwd\n" | sudo -S -p '' pip install -q -U ansible
-      fi
+      pkgs_dep="build-essential libffi-dev libssl-dev python3 python3-dev python3-pip git"
+      pip_pkgs="ansible jmespath"
+  elif [ "$distId" = 'Red-Hat' -o "$distId" = 'CentOS'  ]
+  then
+      rh_build_essential="autoconf automake binutils autoconf automake binutils redhat-rpm-config rpm-build rpm-sign ctags elfutils indent patchutils"
+      pkgs_dep="yum-utils openssl-devel libffi-devel python3 python3-devel python3-pip git $rh_build_essential"
+      pip_pkgs="ansible jmespath"
   fi
+  if [ ! -x "$(command -v pip3)" ]
+  then
+        echo "installing Python and build dependencies with $pkg_manager"
+        echo "$sudopassword\n" | sudo -S -p '' $pkg_manager install -y -q $pkgs_dep
+  fi
+  if [ ! -x "$(command -v ansible)" ]
+  then
+        echo "installing $pip_pkgs through pip"
+        echo "$sudopassword\n" | sudo -S -p '' pip3 install -q -U $pip_pkgs
+  fi
+
+
 }
 
 execute_ansible()
@@ -120,6 +122,11 @@ echo
 
 case $1 in
   -A*) install_prerequisite $sudopassword
+        if [ ! -x "$(command -v lsb_release)" ]
+        then
+            echo "pb lsb_release not found"
+            exit 202
+        fi
 	install_dependencies $sudopassword
 	execute_ansible $sudopassword
   	;;
