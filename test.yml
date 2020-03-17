@@ -1,0 +1,8 @@
+---
+- name: local install
+  hosts: localhost
+  become: yes
+  become_method: sudo
+
+  roles:
+   - locales
